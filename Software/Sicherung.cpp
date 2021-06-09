@@ -1,3 +1,11 @@
+#include <iostream>
+#include <math.h>
+#include <sstream>
+#include <iomanip>
+#include <time.h>
+#include <mpi.h>
+
+
 long double calc_PI(int step_Size, int start_Point) {
         long double sum = 0;
         for (int k = 0; k <= 3000000; k++)
@@ -9,7 +17,9 @@ long double calc_PI(int step_Size, int start_Point) {
 
 int main (int argc, char** argv)
 {
-        int size, rank, length;
+		std::cout << "Programm ist gestartet" << std::endl;
+		
+        int size, rank; //length;
         char name[50];
 
         // initialisation of mpi
@@ -19,30 +29,40 @@ int main (int argc, char** argv)
         // get number of rank
         MPI_Comm_size(MPI_COMM_WORLD, &size);
         // get processor name
-        MPI_Get_processor_name(name, &length);
+        //MPI_Get_processor_name(name, &length);
         // output file name
-        const char OUTPUT_FILE_NAME[] = "ouput.txt";
+        //const char OUTPUT_FILE_NAME[] = "ouput.txt";
         // define master root rank
         const int MASTER_ROOT_RANK = 0;
         // output
-        std::cout << "Rank: " << rank << std::endl << "Size: " << size << std::>
+        std::cout << "Size: " << size << std::endl;
 
         // define start time
-        double time = o.0, tstart;
+        double time = 0.0, tstart;
         tstart = clock();
 
         // define sum
         long double sum = 0;
 
-        //
-        if (rank==0)
+		// master
+		if (rank==0)
+		{
+			// start of calculation
+			std::cout << "Rank of master: " << rank << std::endl;
+			
+		}
+
+        // slave
+        if (rank!=0)
         {
-
-           std::cout << "Rank " << rank << " fuehrt Berechnung durch" << std::e>
-
+			std::cout << "Master " << rank << " fuehrt Berechnung durch" << std::endl;
+			//sum = calc_PI(size-1, rank-1);
+			// send
+			//MPI_SEND(&sum);
         }
+		
 
-	// output
+		// output
         std::cout << "Sum: " << sum << std::endl;
 
         // sum into pi as result
