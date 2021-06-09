@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include <time.h>
+#include <mpi.h>
 
 
 long double calc_PI(int step_Size, int start_Point) {
@@ -21,14 +22,25 @@ long double calc_PI(int step_Size, int start_Point) {
 
 int main()
 {
+	// Variablen zur Beschreibung des Systems
+	int rank, size;
+
+	MPI_Init(&argc, &argv);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+
 	double time = 0.0, tstart;
 
 	tstart = clock();
 
 	long double sum = 0;
 
-	sum = calc_PI(2, 0);
-	std::cout << "Summe: " << sum;
+	if (rank > 0) {
+		sum = calc_PI(size, (rank - 1));
+		std::cout << "Summe: " << sum;
+		MPI_Send(&sum, 100000, MPI_LONG_DOUBLE, login_NODE, 123, );
+	}
 	
 
 	//long double sum = 0;
@@ -50,5 +62,7 @@ int main()
 
     std::cout << "PI: " << std::setprecision(50) << pi << std::endl; 
 	std::cout << "Laufzeit: " << time;
+	
+	MPI_Finalize();
 }
 
