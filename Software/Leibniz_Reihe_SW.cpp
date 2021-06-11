@@ -32,7 +32,7 @@ int main (int argc, char** argv)
 		MPI_Status status;
 		
         // output
-			std::cout << "Number of Ranks: " << size << std::endl;
+		std::cout << "Number of Ranks: " << size << std::endl;
 
         // slave
         if (rank!=0)
@@ -42,8 +42,8 @@ int main (int argc, char** argv)
 			// send
 			length = sizeof(sum);
 			
-			MPI_Send( &length,sizeof(length) , MPI_INT, 0, 0, MPI_COMM_WORLD);
-			MPI_SEND(&sum, length , MPI_LONG_DOUBLE, 0, 1, MPI_COMM_WORLD);
+			//MPI_Send( &length,sizeof(length) , MPI_INT, 0, 0, MPI_COMM_WORLD);
+			MPI_Send(&sum, length , MPI_LONG_DOUBLE, 0, 1, MPI_COMM_WORLD);
         }
 
 		// master
@@ -57,7 +57,7 @@ int main (int argc, char** argv)
 				//sum = calc_PI(1,0); //calc_PI(int step_Size, int start_Point)
 			}
 			
-			MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
+			//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
 			MPI_Recv(&sum, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
 			
 					// output
