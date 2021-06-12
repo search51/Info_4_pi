@@ -40,10 +40,10 @@ int main (int argc, char** argv)
 			std::cout << "Slave " << rank << " fuehrt Berechnung durch" << std::endl;
 			sum = calc_PI(size-1, rank-1);
 			// send
-			length = sizeof(sum);
+			//length = sizeof(sum);
 			
 			//MPI_Send( &length,sizeof(length) , MPI_INT, 0, 0, MPI_COMM_WORLD);
-			MPI_Send(&sum, length , MPI_LONG_DOUBLE, 0, 1, MPI_COMM_WORLD);
+			MPI_Send(&sum, 1 , MPI_LONG_DOUBLE, 0, 1, MPI_COMM_WORLD);
         }
 
 		// master
@@ -57,9 +57,11 @@ int main (int argc, char** argv)
 				//sum = calc_PI(1,0); //calc_PI(int step_Size, int start_Point)
 			}
 			
-			//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
-			MPI_Recv(&sum, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
-			
+			for(int i = 1, i < size; i++)
+			{
+				//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
+				MPI_Recv(&sum, 1, MPI_LONG_DOUBLE, i, 1, MPI_COMM_WORLD, &status);
+			}
 					// output
 			std::cout << "Sum: " << sum << std::endl;
 	
