@@ -8,7 +8,7 @@
 
 long double calc_PI(int step_Size, int start_Point) {
         long double sum = 0;
-        for (int k = start_Point; k <= 300000000; k += step_Size)
+        for (int k = start_Point; k <= 600000000; k += step_Size)
         {
                 sum += pow(-1, k) / (2 * k + 1);
         }
@@ -17,7 +17,7 @@ long double calc_PI(int step_Size, int start_Point) {
 
 int main (int argc, char** argv)
 {		
-        int size, rank, length;
+        int size, rank;
 		long double sum = 0;
 
         // initialisation of mpi
@@ -50,13 +50,14 @@ int main (int argc, char** argv)
 		if (rank==0)
 		{
 			long double help_sum = 0;
-			std::cout << std::endl << "##### MASTER #####" << std::endl;
+			std::cout << std::endl << "##### MASTER ##### Netzwerkgroesse: " << size << std::endl;
 			
 			if (size==1)
 			{
 				sum = calc_PI(1,0); //calc_PI(int step_Size, int start_Point)
 			}
 			else {
+				//sum += calc_PI(size, 0);
 				for (int i = 1; i < size; i++)
 				{
 					//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
