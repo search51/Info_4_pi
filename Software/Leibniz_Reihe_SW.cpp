@@ -60,7 +60,7 @@ int main (int argc, char** argv)
 				//sum = calc_PI(1,0); //calc_PI(int step_Size, int start_Point)
 			}
 			
-			for(int i = 1, i < size; i++)
+			for(int i = 1; i < size; i++)
 			{
 				//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
 				MPI_Recv(&help_sum, 1, MPI_LONG_DOUBLE, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &status);
