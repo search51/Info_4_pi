@@ -55,12 +55,13 @@ int main()
 	//}
 
 	long double pi = sum * 4;
+	std::cout << "PI: " << std::setprecision(50) << pi << std::endl;
 
 	time += clock() - tstart;
 
 	time = time / CLOCKS_PER_SEC;
 
-    std::cout << "PI: " << std::setprecision(50) << pi << std::endl; 
+   
 	std::cout << "Laufzeit: " << time;
 	
 	MPI_Finalize();

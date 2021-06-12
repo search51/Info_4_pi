@@ -17,7 +17,7 @@ long double calc_PI(int step_Size, int start_Point) {
 
 int main (int argc, char** argv)
 {
-		std::cout << "Programm ist gestartet \n" << std::endl;
+		std::cout << "Programm ist gestartet" << std::endl;
 		
         int size, rank, length;
 		long double sum = 0;
@@ -31,12 +31,16 @@ int main (int argc, char** argv)
 		
 		MPI_Status status;
 
+		// Beginn der Laufzeitmessung
+		double time = 0.0, tstart;
+		tstart = clock();
+
         // slave
         if (rank!=0)
         {
 			long double help_sum = 0;
 
-			std::cout << std::endl << "##### SLAVE " << rank << " ##### \n" << std::endl;
+			std::cout << std::endl << "##### SLAVE " << rank << " #####" << std::endl;
 			help_sum = calc_PI(size-1, rank-1);
 
 			std::cout << "Ergebnis der Berechnung: " << help_sum;
@@ -49,7 +53,7 @@ int main (int argc, char** argv)
 		if (rank==0)
 		{
 			long double help_sum = 0;
-			std::cout << std::endl << "##### MASTER ##### \n" << "Number of Ranks: " << size << std::endl;
+			std::cout << std::endl << "##### MASTER ##### \n" << "Networksize: " << size << std::endl;
 			
 			if (size==1)
 			{
@@ -59,7 +63,7 @@ int main (int argc, char** argv)
 			for(int i = 1, i < size; i++)
 			{
 				//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
-				MPI_Recv(&help_sum, 1, MPI_LONG_DOUBLE, i, 1, MPI_COMM_WORLD, &status);
+				MPI_Recv(&help_sum, 1, MPI_LONG_DOUBLE, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &status);
 				// Ausgabe der empfangenen Daten
 				std::cout << "Received Message Number " << i << ": " << help_sum << std::endl;
 				// Addition der Hilfssumme zur Hauptsumme
@@ -73,8 +77,10 @@ int main (int argc, char** argv)
 			std::cout << std::endl << "PI: " << std::setprecision(50) << pi << std::endl;
 		}
 
-		
-
+		// Berechnung und Ausgabe der Laufzeit
+		time += clock() - tstart;
+		time = time / CLOCKS_PER_SEC;
+		std::cout << std::endl << "Laufzeit: " << time;
 
         //std::cout << "Run-Time: " << time << std::endl;
 
