@@ -17,7 +17,7 @@ long double calc_PI(int step_Size, int start_Point) {
 
 int main (int argc, char** argv)
 {
-		std::cout << "Programm ist gestartet" << std::endl;
+		std::cout << "Programm ist gestartet \n" << std::endl;
 		
         int size, rank, length;
 		long double sum = 0;
@@ -30,27 +30,26 @@ int main (int argc, char** argv)
         MPI_Comm_size(MPI_COMM_WORLD, &size);
 		
 		MPI_Status status;
-		
-        // output
-		std::cout << "Number of Ranks: " << size << std::endl;
 
         // slave
         if (rank!=0)
         {
-			std::cout << "Slave " << rank << " fuehrt Berechnung durch" << std::endl;
-			sum = calc_PI(size-1, rank-1);
-			// send
-			//length = sizeof(sum);
+			long double help_sum = 0;
+
+			std::cout << std::endl << "##### SLAVE " << rank << " ##### \n" << std::endl;
+			help_sum = calc_PI(size-1, rank-1);
+
+			std::cout << "Ergebnis der Berechnung: " << help_sum;
 			
 			//MPI_Send( &length,sizeof(length) , MPI_INT, 0, 0, MPI_COMM_WORLD);
-			MPI_Send(&sum, 1 , MPI_LONG_DOUBLE, 0, 1, MPI_COMM_WORLD);
+			MPI_Send(&help_sum, 1 , MPI_LONG_DOUBLE, 0, 1, MPI_COMM_WORLD);
         }
 
 		// master
 		if (rank==0)
 		{
-			// start of calculation
-			std::cout << "Rank of Master: " << rank << std::endl;
+			long double help_sum = 0;
+			std::cout << std::endl << "##### MASTER ##### \n" << "Number of Ranks: " << size << std::endl;
 			
 			if (size==1)
 			{
@@ -60,16 +59,18 @@ int main (int argc, char** argv)
 			for(int i = 1, i < size; i++)
 			{
 				//MPI_Recv(&length, 50, MPI_LONG_DOUBLE, 1, 1, MPI_COMM_WORLD, &status);
-				MPI_Recv(&sum, 1, MPI_LONG_DOUBLE, i, 1, MPI_COMM_WORLD, &status);
+				MPI_Recv(&help_sum, 1, MPI_LONG_DOUBLE, i, 1, MPI_COMM_WORLD, &status);
+				// Ausgabe der empfangenen Daten
+				std::cout << "Received Message Number " << i << ": " << help_sum << std::endl;
+				// Addition der Hilfssumme zur Hauptsumme
+				sum += help_sum;
 			}
-					// output
-			std::cout << "Sum: " << sum << std::endl;
-	
+
 			// sum into pi as result
 			long double pi = sum * 4;
 	
 			// output
-			std::cout << "PI: " << std::setprecision(50) << pi << std::endl;
+			std::cout << std::endl << "PI: " << std::setprecision(50) << pi << std::endl;
 		}
 
 		
