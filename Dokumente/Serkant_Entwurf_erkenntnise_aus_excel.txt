@@ -1,0 +1,18 @@
+Erkenntnise aus der Datenanalyse:
+
+- Klare Laufzeitverkürzung ist erkennbar:
+In beiden Varianten ist ein Mehrgewinn der Parallelisierung eindeutig erkennbar(bezug auf die Diagramme nehmen). In der Variante mit Master nimmt die Laufzeit mit der Anzahl der Worker exponentiell ab. Das Netzwerk braucht in der Berechnung mit nur einer Instanz 18,83 Sekunden wo hingegen bei der Nutzung von 5 Virtuellen Maschinen die Rechendauer auf 4,512 Sekunden abnimmt. 
+Aus dem Diagramm heraus ist ebenso ableitbar das ab einer bestimmten Anzahl an Nutzer der Mehrgewinn immer geringer wird und die Maschinen den größten Teil nicht mehr für die eigentliche Berechnung benötigen sondern für die Intere MPI Komminikation untereinander.
+***** kannst du nochmal ein zwei sätze zu dem fall ohne Master schreiben ich bin mir nicht ganz sicher woran das mit der längeren Laufzeit bei 2 instanzen liegt***
+
+
+
+- Schwankung unterschiedlicher Laufzeiten:
+ Die Unterschiedelichen gemessen Laufzeiten sind damit zu begründen das gewissen Latzenszeiten innerhalb der Komminikation entstehen und diese zu unterschiedlichen Ergebnissen führen.
+Im Diagramm ( bal bal) ist dies zu erkennen. Die einzelnen Messungen sind um die durchschnittlich errechente Laufzeit verteilt hierbei sind auch keine einzelnen Statistischen Ausreißer erkennbar und die einzelnen Zeiten als Plausibel begründbar.
+
+
+-Vergleich MAster ohne Master:
+In dem Vergleich beider Varianten ist ebenso eine eindeutig Erkennbare Tendenz das eine zentralisierte Komminikation via Master deutliche Laufzeiten vorteile in der Anwendung von bis zu 3 Instanzen schafft. Ab der Nutzung von mehr als 3 Instanzen stellt sich hier auch das Phänomen ein das die Laufzeit nicht mehr signifikant fällt und der größte Teil auf die Komminikation zurückzuführen ist.
+
+
