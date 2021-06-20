@@ -1,4 +1,6 @@
 Ausblick->
 
-Untersuchung der Leitfrage Kann man die Laufzeit der Pi Berechnung durch parallelisierung optimieren gilt als bestätigt zu betrachen( möglicher bezug zu kapitel fazit)
-Jedoch herrscht immer noch mögliches Optimierungspotential so wäre eine weitere Untersuchung der Kommunikationsstrukur von Punkt zu Punkt zu einer Broadcastbasierten MPI Variante eine Überlegung wert. Der aktuelle Aufbau und Ablauf des Quellcodes ist hierbei sehr auf den einen Anwendungsfall der Leibnizreihe angepasst und auf diesen optimiert es wäre es auch eine möglichkeit den Code allgemeiner zu halten und die Varianz der Nutzung zu erhöhen.
+In den Kapiteln Fazit und Laufzeitanalyse wurde die grundsätzliche Leitfrage, ob eine Laufzeit Optimierung bei einer Parallelisierung vorliegt, bestätigt. 
+Jedoch herrscht immer noch ein mögliches Optimierungspotenzial am Code und in der Kommunikationsstruktur. 
+Die aktuelle Kommunikationsart basiert auf einem blockierenden Punkt zu Punkt Variante. Ein Wechsel auf die Broadcastbasierte MPI Kommunikation besitzt das Potenzial die Laufzeit weiter zu reduzieren speziell bei der Verwendung mehrerer Instanzen.
+Der aktuelle Aufbau und Ablauf des Codes ist nur auf den Anwendungsfall der Leibniz Reihe angepasst. In dem der Code noch Variabler gehalten wird, wäre dieser theoretisch dafür geeignet in verschiedenen Szenarien genutzt zu werden. 
